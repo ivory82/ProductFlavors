@@ -49,8 +49,16 @@ public class MainActivity extends AppCompatActivity {
         for( ;;){
         }
 
+//        int aa;
+//        aa ++;
+//        aa = 5 + 10;
+
     }
 
+    /**
+     * important value
+     * @return
+     */
     private int getNum(){
         return 3;
     }
