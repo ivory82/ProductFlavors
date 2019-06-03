@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="comm">
+
+	<select id="selectCommSchedule" resultType="int" parameterType="com.ulike.sports.model.common.CommSchedule">
+		SELECT count(*) FROM `comm_schedule`
+		WHERE game_id=#{game_id}
+		AND sports_gb=#{sports_gb}
+		AND season=#{season}
+		AND is_cms=1
+	</select>
+
+	<insert id="insertCommSchedule" parameterType="com.ulike.sports.model.common.CommSchedule">
+		/* comm.insertCommSchedule */
+		/* game_id: ${game_id},game_time: ${game_time} */
+		INSERT INTO comm_schedule(game_id,sports_gb,season,game_gb,game_title,game_place,game_round,left_team_code,right_team_code,game_date,game_time,game_state,inputtime,reg_dt)
+		VALUES(#{game_id}, #{sports_gb}, #{season}, #{game_gb}, #{game_title}, #{game_place}, ${game_round}, #{left_team_code}, #{right_team_code}, #{game_date}, #{game_time}, 'AUTO', #{inputtime}, now())
+		ON DUPLICATE KEY UPDATE 
+		game_gb = #{game_gb}, 
+		game_title = #{game_title}, 
+		game_place = #{game_place}, 
+		game_round = ${game_round}, 
+		left_team_code = #{left_team_code}, 
+		right_team_code = #{right_team_code}, 
+		game_date = #{game_date}, 
+		game_time = #{game_time}, 
+		game_state = 'AUTO', 
+		inputtime = #{inputtime}	
+	</insert>
+		
+	<insert id="insertCommTeam" parameterType="com.ulike.sports.model.common.CommTeam">
+		/* comm.insertCommTeam */
+		INSERT INTO comm_team (team_code,sports_gb,team_name,is_use)
+		VALUES
+		<foreach collection="list" item="item" separator=" , ">
+			(#{item.team_code}, #{item.sports_gb}, #{item.team_name}, 0)
+		</foreach>
+		ON DUPLICATE KEY UPDATE 
+		comm_team.team_name = VALUES(comm_team.team_name)
+	</insert>
+
+</mapper>
