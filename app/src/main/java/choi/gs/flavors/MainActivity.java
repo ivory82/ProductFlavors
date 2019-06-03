@@ -38,7 +38,20 @@ public class MainActivity extends AppCompatActivity {
                 + "\r\n" + IS_LIVE_URL
         +"\r\n" + URL_ADDRESS );
 
+        int a;
 
+        if( getNum() == 3 || true ){
+            a = 2;
+        } else {
+            a = 3;
+        }
 
+        for( ;;){
+        }
+
+    }
+
+    private int getNum(){
+        return 3;
     }
 }
